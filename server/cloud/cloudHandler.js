@@ -1,25 +1,20 @@
-const {Storage} = require('@google-cloud/storage');
-var stream = require('stream');
+const {Storage} = require('@google-cloud/storage')
+var stream = require('stream')
 const config = require('../config/config')
+const queries = require('../db/queries')
 
 const projectId = config.gcloud.projectId
 const keyFilename = config.gcloud.keyFilename
 const bucketName = config.gcloud.bucket
-// const keyFilename = '../../home-assignment-bThere-8f0eda8b786c.json'
-// const express = require('express')
-// const bodyParser = require('body-parser')
-// const app = express();
 
 const storage = new Storage({ projectId, keyFilename })
 const bucket = storage.bucket(bucketName)
-const bufferStream = new stream.PassThrough();
+const bufferStream = new stream.PassThrough()
 
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
 
-exports.storeToCloud = function(imageBase64, description) {
+exports.storeToCloud = function(imageBase64, counter, description) {
     bufferStream.end(Buffer.from(imageBase64, 'base64'))
-    const file = bucket.file('image.jpg')
+    const file = bucket.file(`image${counter}.jpg`)
     bufferStream.pipe(file.createWriteStream({
         resumable: false,
           metadata: {
@@ -34,8 +29,8 @@ exports.storeToCloud = function(imageBase64, description) {
         .on('error', function(err) {
             console.log(err)
         })
-        .on('finish', function() {
-          console.log(file.url)
-        //   queries.insert( description)
+        .on('finish', async function() {
+            console.log(file.metadata.selfLink)
+            await queries.insert(file.metadata.selfLink, description)
         })
 }

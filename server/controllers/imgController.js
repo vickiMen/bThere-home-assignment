@@ -1,8 +1,9 @@
 const validationHandler = require('../validations/validationHandler')
 const dbHandling = require('../data/index')
 const config = require('../config/config')
-const queries = require('../db/queries')
 const cloud = require('../cloud/cloudHandler')
+
+let counter = 0
 
 exports.index = async (req, res, next) => {
     const query = 'select * from img'
@@ -14,12 +15,13 @@ exports.index = async (req, res, next) => {
     }
 }
 
-exports.store = (req, res, next) => {
+exports.store = async (req, res, next) => {
     try {
+        // console.log(counter)
         validationHandler(req)
         //upload to gcloud
-        cloud.storeToCloud(req.body.url, req.body.description)
-        // queries.insert(req.body.url, req.body.description)
+        counter++
+        await cloud.storeToCloud(req.body.url, counter, req.body.description)
         res.send({message: 'Image was uploaded successfully!'})
     } catch(err) {
         next(err)

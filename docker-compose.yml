@@ -1,0 +1,13 @@
+version: '3'
+services:
+  sqlserver:
+    image: microsoft/mssql-server-linux:2017-latest
+    ports:
+      - "1401:1433"
+    volumes:
+      - ./db:/tmp/data
+    environment:
+      - ACCEPT_EULA=Y
+      - "MSSQL_SA_PASSWORD=${DB_PASS}"
+    command:
+      - /tmp/data/run.sh

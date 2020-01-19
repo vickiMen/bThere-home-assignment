@@ -1,3 +1,5 @@
+-- this is a file that runs only one time upon DB installation, in order to create table
+
 CREATE SCHEMA ImgSchema;
 GO
 

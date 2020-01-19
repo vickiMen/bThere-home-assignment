@@ -36,9 +36,6 @@ exports.getData = function(callback) {
             }
         })
 
-        // Print the rows read
-            
-        
         const newResults = []
         
         request.on('row', function(columns) {
@@ -61,8 +58,6 @@ exports.getData = function(callback) {
                     newResults.push({url, desc})
                 }
             }
-            
-            // console.log(newResults)
         })
 
         request.on("doneProc", (rowCount, more, rows) => {
@@ -70,6 +65,4 @@ exports.getData = function(callback) {
         })
 
         connection.execSql(request)
-
-        // const bla = ['1','2']
 }

@@ -11,13 +11,19 @@ const storage = new Storage({ projectId, keyFilename })
 const bucket = storage.bucket(bucketName)
 let bufferStream
 
+exports.countItems = async function(){
+    const [files] = await bucket.getFiles()
+    console.log(files.length)
+    return files.length
+}
+
 exports.renewBuffer = function(){
     bufferStream = new stream.PassThrough()
 }
 
 exports.storeToCloud = function(imageBase64, counter, description) {
     bufferStream.end(Buffer.from(imageBase64, 'base64'))
-    const file = bucket.file(`image${counter}.jpg`)
+    const file = bucket.file(`img${counter}.jpg`)
     bufferStream.pipe(file.createWriteStream({
         resumable: false,
           metadata: {

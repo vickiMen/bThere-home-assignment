@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
-app.use('/api/img', imgRoutes)
+app.use('/', imgRoutes)
 
 app.use(errorHandler)
 

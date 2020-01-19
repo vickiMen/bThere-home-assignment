@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const { hasUrl } = require('../validations/validators')
 
-router.get('/', imgController.index)
-router.post('/', hasUrl, imgController.store)
+router.get('/getImages', imgController.getData)
+router.post('/uploadImage', hasUrl, imgController.storeData)
 
 module.exports = router

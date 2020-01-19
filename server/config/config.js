@@ -16,7 +16,8 @@ const config = {
             }
         },
         options: {
-            database: process.env.DB_NAME
+            database: process.env.DB_NAME,
+            rowCollectionOnRequestCompletion: true
         }
     },
 

@@ -1,4 +1,9 @@
 -- this is a file that runs only one time upon DB installation, in order to create table
+CREATE DATABASE ImagesDB;
+GO
+
+USE ImagesDB;
+GO
 
 CREATE SCHEMA ImgSchema;
 GO

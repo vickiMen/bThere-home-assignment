@@ -10,4 +10,4 @@ services:
       - ACCEPT_EULA=Y
       - "MSSQL_SA_PASSWORD=${DB_PASS}"
     command:
-      - /tmp/data/run.sh
+      - /docker/run.sh

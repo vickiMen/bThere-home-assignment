@@ -13,7 +13,6 @@ let bufferStream
 
 exports.countItems = async function(){
     const [files] = await bucket.getFiles()
-    console.log(files.length)
     return files.length
 }
 
